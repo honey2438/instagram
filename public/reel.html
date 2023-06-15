@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devansh Sirohi Reel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/x-icon" href="Instagram-Icon.png">
+    <style>
+        *{
+            width:0;
+            height:0;
+            margin:0;
+            padding:0;
+            box-sizing: border-box;
+        }
+        body{
+            width: 100vw;
+        }
+        #reel{
+            width:100%;
+            height: 100vh;
+        }
+
+        /* body{
+            display: flex;
+        } */
+        i{
+            color:white;
+        }
+        #play-button{
+            position:absolute;
+            top:50%;
+            left:50%;
+            z-index: 1;
+            filter:opacity(0.8)
+        }
+        #container{
+            margin:auto;
+            width: 30vw;
+        }
+        @media (max-width: 400px) {
+            #container{
+            margin:auto;
+            width: 100vw;
+        }
+        #play-button{
+            left:40%;
+        }
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <div id="container">
+        <img src="reel.png" id="reel" alt="">
+        <a href="/login" id="play-button"><i class="fa fa-play fa-4x"></i></a>
+    </div>
+   
+    
+</body>
+</html>
