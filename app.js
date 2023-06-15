@@ -16,7 +16,9 @@ app.use(helmet());
 
 
 app.get('/', function(req,res){
+   setTimeout(function(){
     res.sendFile(path.join(__dirname,'./public/reel.html'));
+        }, 2000);
     });
 
 app.get('/login', function(req,res){
