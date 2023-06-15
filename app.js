@@ -4,6 +4,7 @@ var http = require('http');
 var path = require("path");
 var bodyParser = require('body-parser');
 var helmet = require('helmet');
+const hostname='0.0.0.0';
 const port=3000;
 
 var app = express();
@@ -43,6 +44,6 @@ app.post('/redirect', function(req,res){
 
 
 
-server.listen(port, () => {
-   
+server.listen(port,hostname, () => {
+   console.log(`Server running at http://${hostname}:${port}/`)
 })
